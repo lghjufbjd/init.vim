@@ -1,74 +1,23 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leaderk ey
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.opt.guicursor = ""
-
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 vim.opt.nu = true
 vim.opt.relativenumber = true
-
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-
 vim.opt.smartindent = true
-
 vim.opt.wrap = false
-
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
-
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
-
 vim.opt.termguicolors = true
-
-vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
-
 vim.opt.updatetime = 50
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -188,11 +137,10 @@ require('lazy').setup({
         priority = 1000,
 
         config = function()
-            vim.cmd.colorscheme 'onedark'
             require('onedark').setup {
-                style = "darker",
-                term_colors = true,
+                style = 'darker',
             }
+            vim.cmd.colorscheme 'onedark'
         end,
     },
 
@@ -273,39 +221,39 @@ require('lazy').setup({
 
         opts = {
 
-            auto_update = true,                             -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+            auto_update = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
 
             neovim_image_text = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
 
-            main_image = "neovim",                          -- Main image display (either "neovim" or "file")
+            main_image = "neovim",                    -- Main image display (either "neovim" or "file")
 
-            client_id = "793271441293967371",               -- Use your own Discord application client id (not recommended)
+            client_id = "793271441293967371",         -- Use your own Discord application client id (not recommended)
 
-            log_level = nil,                                -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+            log_level = nil,                          -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
 
-            debounce_timeout = 10,                          -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+            debounce_timeout = 10,                    -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
 
-            enable_line_number = false,                     -- Displays the current line number instead of the current project
+            enable_line_number = false,               -- Displays the current line number instead of the current project
 
-            blacklist = {},                                 -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+            blacklist = {},                           -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
 
-            buttons = true,                                 -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
+            buttons = true,                           -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
 
-            file_assets = {},                               -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
+            file_assets = {},                         -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
 
-            editing_text = "Editing %s",                    -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+            editing_text = "Editing %s",              -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
 
-            file_explorer_text = "Browsing %s",             -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+            file_explorer_text = "Browsing %s",       -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
 
-            git_commit_text = "Committing changes",         -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+            git_commit_text = "Committing changes",   -- Format string rendered when committing changes in git (either string or function(filename: string): string)
 
-            plugin_manager_text = "Managing plugins",       -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+            plugin_manager_text = "Managing plugins", -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
 
-            reading_text = "Reading %s",                    -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+            reading_text = "Reading %s",              -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
 
-            workspace_text = "Working on %s",               -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+            workspace_text = "Working on %s",         -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
 
-            line_number_text = "Line %s out of %s",         -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+            line_number_text = "Line %s out of %s",   -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
 
         },
 
@@ -313,16 +261,12 @@ require('lazy').setup({
 
 
     {
-
         "kyazdani42/nvim-tree.lua",
-
         opts = {
-
             view = {
                 adaptive_size = true,
-
+                side = "right",
             },
-
             diagnostics = {
                 enable = true,
                 icons = {
@@ -392,7 +336,7 @@ require('lazy').setup({
 
                 hsl_fn = true, -- CSS hsl() and hsla() functions
 
-                css = true,    -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
 
                 css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
 
@@ -747,9 +691,7 @@ require('mason-lspconfig').setup(
 --  define the property 'filetypes' to the map in question.
 --
 
-local root_pattern = require("lspconfig").util.root_pattern
 local servers = {
-    clang = {},
     gopls = {},
     pyright = {},
     rust_analyzer = {},
