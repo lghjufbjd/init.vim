@@ -256,6 +256,46 @@ require('lazy').setup({
       end,
    },
    {
+      "jose-elias-alvarez/null-ls.nvim",
+      event = { "BufReadPre", "BufNewFile" },
+      dependencies = { "mason.nvim" },
+      opts = function()
+         local null_ls = require("null-ls")
+         local formatting = null_ls.builtins.formatting
+         local diagnostics = null_ls.builtins.diagnostics
+         local code_actions = null_ls.builtins.code_actions
+         local completion = null_ls.builtins.completion
+         return {
+            sources = {
+               formatting.prettier.with {
+                  filetypes = {
+                     "javascript",
+                     "javascriptreact",
+                     "typescript",
+                     "typescriptreact",
+                  },
+                  extra_args = function(params)
+                     local file = params.bufname
+                     local root = vim.fn.FindRootDirectory(file)
+                     if root == "" then
+                        return {
+                           "--tab-width=" .. vim.bo.tabstop,
+                           "--single-quote",
+                           "--trailing-comma=all",
+                           "--bracket-spacing=false",
+                           "--jsx-bracket-same-line",
+                           "--print-width=80",
+                        }
+                     end
+                     return { "--config=" .. root .. "/.prettierrc" }
+                  end,
+               },
+               diagnostics.tsc,
+            },
+         }
+      end,
+   },
+   {
       'neovim/nvim-lspconfig',
       config = function()
          local format_is_enabled = true
@@ -307,53 +347,4 @@ require('lazy').setup({
          })
       end,
    },
-   {
-      "jose-elias-alvarez/null-ls.nvim",
-      event = { "BufReadPre", "BufNewFile" },
-      dependencies = { "mason.nvim" },
-      opts = function()
-         local null_ls = require("null-ls")
-         local formatting = null_ls.builtins.formatting
-         local diagnostics = null_ls.builtins.diagnostics
-         local code_actions = null_ls.builtins.code_actions
-         local completion = null_ls.builtins.completion
-         return {
-            sources = {
-               formatting.prettier,
-               formatting.fish_indent,
-               -- formatting.eslint,
-               -- diagnostics.eslint,
-               -- code_actions.eslint,
-               diagnostics.fish,
-               diagnostics.tsc,
-               code_actions.gitsigns,
-               completion.spell,
-            },
-         }
-      end,
-   },
-   {
-      "MunifTanjim/prettier.nvim",
-      branch = "main",
-      config = function()
-         require("prettier").setup {
-            tab_width = 3,
-            single_quote = false,
-            trailing_comma = "all",
-            config_precedence = "prefer-file",
-            bracket_spacing = true,
-            jsx_bracket_same_line = false,
-            arrow_parens = "avoid",
-            print_width = 80,
-            disable_languages = {},
-            filetypes = {
-               "javascript",
-               "javascriptreact",
-               "typescript",
-               "typescriptreact",
-            }
-         }
-      end,
-   }
-
-}, {})
+})
