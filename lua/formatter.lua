@@ -64,7 +64,7 @@ return {
                         end
                      end
                      vim.api.nvim_command('silent! write')
-                     vim.fn.system(cmd .. ' --write ' .. filepath)
+                     vim.fn.system(cmd .. ' --write ' .. '"' .. filepath .. '"')
                      vim.api.nvim_command('silent! edit')
                      return true
                   end
