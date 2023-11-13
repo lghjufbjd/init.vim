@@ -7,7 +7,7 @@ mv ~/.local/state/nvim{,.bak}
 mv ~/.cache/nvim{,.bak}
 
 # Installation
-git clone https://github.com/lghjufbjd/init.vim.git ~/.config/nvim
+git clone git@github.com:lghjufbjd/init.vim.git ~/.config/nvim
 
 # Optional
 rm -rf ~/.config/nvim/.git
