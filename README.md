@@ -1,5 +1,4 @@
 # Backup
-*required
 mv ~/.config/nvim{,.bak}
 
 ## optional backups
