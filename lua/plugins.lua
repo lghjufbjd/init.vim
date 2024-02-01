@@ -191,12 +191,15 @@ require('lazy').setup({
             update_cwd = true,
          },
          git = {
-            enable = true,
+            enable = false,
             ignore = true,
             timeout = 500,
          },
          renderer = {
-            highlight_git = true,
+            icons = {
+               default = " ",
+               symlink = " ",
+            },
             highlight_opened_files = "all",
             indent_markers = {
                enable = false,
@@ -253,6 +256,12 @@ require('lazy').setup({
          vim.g.vim_matchtag_enable_by_default = 1
          vim.g.vim_matchtag_files = "*.astro,*.html,*.xml,*.js,*.jsx,*.vue,*.svelte,*.jsp,*.tsx"
          vim.g.vim_matchtag_highlight_cursor_on = 1
+      end,
+   },
+   {
+      "christoomey/vim-tmux-navigator",
+      config = function()
+         vim.g.tmux_navigator_no_mappings = 1
       end,
    },
    require("formatter")
